@@ -4,5 +4,7 @@
 # exclude files
 !/.gitignore
 !/.gitconfig
+!/Brewfile
+!/README.md
 
 !/.hammerspoon
