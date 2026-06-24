@@ -2,8 +2,6 @@
 brew "gh"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # File browser
