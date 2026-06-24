@@ -4,7 +4,16 @@
 # exclude files
 !/.gitignore
 !/.gitconfig
-!/Brewfile
-!/README.md
+
+!/.gnupg/
+/.gnupg/*
+!/.gnupg/gpg-agent.conf
+
 
 !/.hammerspoon
+
+!/.vim/
+/.vim/plugged/
+
+!/Brewfile
+!/README.md
