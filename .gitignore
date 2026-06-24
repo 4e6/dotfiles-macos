@@ -1,0 +1,7 @@
+# ignore root
+/*
+
+# exclude files
+!/.gitignore
+
+!/.hammerspoon
