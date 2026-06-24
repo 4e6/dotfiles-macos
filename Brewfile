@@ -1,3 +1,5 @@
+# Download with resuming and segmented downloading
+brew "aria2"
 # GitHub command-line tool
 brew "gh"
 # GNU Privacy Guard (OpenPGP)
