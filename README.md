@@ -33,7 +33,18 @@ Configured in `.hammerspoon/` (`init.lua` loads `spaces.lua` and
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Clone this repo into `$HOME`
+### 2. Install Oh My Zsh
+
+[Oh My Zsh](https://ohmyz.sh/) manages the zsh configuration:
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+The installer creates/overwrites `~/.zshrc` from its template, backing up any
+existing one to `~/.zshrc.pre-oh-my-zsh`.
+
+### 3. Clone this repo into `$HOME`
 
 Because the working tree is the home directory itself (which already contains
 files), set the remote up in place rather than a plain `git clone`:
@@ -49,7 +60,7 @@ git checkout -f main      # -f overwrites the tracked dotfiles with the repo ver
 Only the allowlisted files are touched; the rest of your home directory is left
 alone.
 
-### 3. Set your Git identity (per machine)
+### 4. Set your Git identity (per machine)
 
 `~/.gitconfig.local` is intentionally **not** tracked, so each machine sets its
 own identity. Create it:
@@ -62,7 +73,7 @@ cat > ~/.gitconfig.local <<'EOF'
 EOF
 ```
 
-### 4. Install packages
+### 5. Install packages
 
 ```bash
 brew bundle install --file=~/Brewfile
@@ -70,7 +81,7 @@ brew bundle install --file=~/Brewfile
 
 This installs everything in the `Brewfile`, including Hammerspoon.
 
-### 5. Enable Hammerspoon
+### 6. Enable Hammerspoon
 
 1. Launch **Hammerspoon** (installed in the previous step).
 2. Grant it **Accessibility** permission:
