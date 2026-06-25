@@ -14,6 +14,11 @@
 --     fast native path. Note: like the native shortcut, this only switches to
 --     desktops that actually exist (Option+3 does nothing until Desktop 3 is
 --     created, at which point macOS auto-binds Ctrl+3 and it starts working).
+--   * Desktop 10 is keyed to 0 (Option+0), mirroring how macOS numbers the
+--     digit row 1..9,0. IMPORTANT: macOS only AUTO-binds Ctrl+1..Ctrl+9; it does
+--     NOT assign Ctrl+0 to "Switch to Desktop 10". So Option+0 stays a no-op
+--     until you map it once by hand: System Settings -> Keyboard -> Keyboard
+--     Shortcuts -> Mission Control -> "Switch to Desktop 10" = Ctrl+0.
 --
 -- MOVING THE FOCUSED WINDOW:
 --   * Option+Shift+<number> -> move the focused window to Desktop N and follow
@@ -23,14 +28,22 @@
 --     held window comes along.
 --
 -- TRADE-OFF: binding Option+<number> means you can no longer TYPE the
--- Option+digit special characters (¡ ™ £ ¢ ∞ §) -- Hammerspoon consumes those
+-- Option+digit special characters (¡ ™ £ ¢ ∞ §, plus Option+0 = º) -- Hammerspoon consumes those
 -- keystrokes. (Likewise the directional-focus binds in window_focus.lua claim
 -- Option+H/J/K/L = ˙ ∆ ˚ ¬.) Rarely an issue; switch SWITCH_MODS if it is.
 
 local log = hs.logger.new('Spaces', 'info')
 
+local DESKTOPS_NUMBER = 10             -- Number of desktops
 local SWITCH_MODS = { "alt" }          -- Option+N      -> switch to Desktop N
 local MOVE_MODS   = { "alt", "shift" } -- Option+Shift+N -> move window to Desktop N
+
+-- The key (and native Ctrl+key shortcut) for a desktop number. Desktops 1-9 use
+-- their own digit; Desktop 10 uses "0" (10 % 10 == 0), matching macOS, which
+-- numbers the row of digit keys 1..9,0.
+local function desktopKey(spaceNumber)
+    return tostring(spaceNumber % 10)
+end
 
 -- Ordered list of real space IDs for a screen, restricted to regular desktops
 -- (full-screen-app spaces are skipped so numbering matches Mission Control).
@@ -50,14 +63,14 @@ end
 -- Switch to a desktop number (1-based) by synthesizing the native, fast
 -- Ctrl+<number> "Switch to Desktop N" shortcut.
 function switchToDesktop(spaceNumber)
-    local key = tostring(spaceNumber)
+    local key = desktopKey(spaceNumber)
     hs.eventtap.event.newKeyEvent({ "ctrl" }, key, true):post()
     hs.eventtap.event.newKeyEvent({ "ctrl" }, key, false):post()
 end
 
--- Bind Option + 1-6 to switch desktops.
-for i = 1, 6 do
-    hs.hotkey.bind(SWITCH_MODS, tostring(i), function() switchToDesktop(i) end)
+-- Bind Option + 1-DESKTOPS_NUMBER to switch desktops (Option+0 -> Desktop 10).
+for i = 1, DESKTOPS_NUMBER do
+    hs.hotkey.bind(SWITCH_MODS, desktopKey(i), function() switchToDesktop(i) end)
 end
 
 -- ============================================================================
@@ -126,15 +139,16 @@ function moveFocusedWindowToSpace(spaceNumber)
     et.newMouseEvent(et.types.leftMouseDown, grab):setFlags({}):post()
     hs.timer.usleep(40000)
     -- Native fast "Switch to Desktop N"; the held window comes along.
-    hs.eventtap.keyStroke({ "ctrl" }, tostring(spaceNumber), 0)
+    hs.eventtap.keyStroke({ "ctrl" }, desktopKey(spaceNumber), 0)
     hs.timer.usleep(150000)
     et.newMouseEvent(et.types.leftMouseUp, grab):setFlags({}):post()
     hs.mouse.absolutePosition(origMouse)
 end
 
--- Bind Option+Shift + 1-6 to move the focused window to that desktop.
-for i = 1, 6 do
-    hs.hotkey.bind(MOVE_MODS, tostring(i), function() moveFocusedWindowToSpace(i) end)
+-- Bind Option+Shift + 1-DESKTOPS_NUMBER to move the focused window to that
+-- desktop (Option+Shift+0 -> Desktop 10).
+for i = 1, DESKTOPS_NUMBER do
+    hs.hotkey.bind(MOVE_MODS, desktopKey(i), function() moveFocusedWindowToSpace(i) end)
 end
 
 -- Diagnostic: run `hs -c "dumpSpaces()"` to inspect the raw data.

@@ -21,9 +21,13 @@ Configured in `.hammerspoon/` (`init.lua` loads `spaces.lua` and
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl/Option + 1…6` | Switch to Desktop 1–6 |
-| `Option + Shift + 1…6` | Move the focused window to Desktop N |
+| `Ctrl/Option + 1…9, 0` | Switch to Desktop 1–10 (`0` = Desktop 10) |
+| `Option + Shift + 1…9, 0` | Move the focused window to Desktop N (`0` = Desktop 10) |
 | `Option + H / J / K / L` | Focus the window to the left / down / up / right |
+
+> Desktop 10 (`0`) only works once you map it in macOS: *System Settings →
+> Keyboard → Keyboard Shortcuts → Mission Control → "Switch to Desktop 10" =
+> `Ctrl+0`.* macOS auto-assigns `Ctrl+1`…`Ctrl+9` but not `Ctrl+0`.
 
 ## Initial setup on a new Mac
 
