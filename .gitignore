@@ -15,5 +15,7 @@
 !/.vim/
 /.vim/plugged/
 
+!/.zshrc
+
 !/Brewfile
 !/README.md

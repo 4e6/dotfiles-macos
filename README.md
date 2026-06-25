@@ -11,6 +11,7 @@ re-includes only the files below).
 |------|---------|
 | `.gitconfig` | Git settings, colors, and a large set of aliases. Includes `~/.gitconfig.local` for the per-machine user identity. |
 | `.gitignore` | The home-directory allowlist (ignore everything, opt files back in). |
+| `.zshrc` | Zsh / Oh My Zsh configuration. |
 | `Brewfile` | Homebrew packages & casks, installable in one go with `brew bundle`. |
 | `.hammerspoon/` | [Hammerspoon](https://www.hammerspoon.org/) automation (see below). |
 
