@@ -6,6 +6,8 @@ brew "gh"
 brew "gnupg"
 # Improved top (interactive process viewer)
 brew "htop"
+# Media player based on MPlayer and mplayer2
+brew "mpv"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # File browser
@@ -22,3 +24,5 @@ brew "zsh-fast-syntax-highlighting"
 cask "claude-code"
 # Desktop automation application
 cask "hammerspoon"
+# Free and open-source media player
+cask "iina"
