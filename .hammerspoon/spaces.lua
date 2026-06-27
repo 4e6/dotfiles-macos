@@ -14,6 +14,12 @@
 --     fast native path. Note: like the native shortcut, this only switches to
 --     desktops that actually exist (Option+3 does nothing until Desktop 3 is
 --     created, at which point macOS auto-binds Ctrl+3 and it starts working).
+--   * BACK-AND-FORTH: pressing Option+<number> while ALREADY on Desktop N jumps
+--     back to the desktop you were on previously (like i3's `workspace
+--     back_and_forth`) instead of doing nothing. "Previously" tracks ALL desktop
+--     changes -- Option+N, native Ctrl+N, trackpad swipes, Mission Control -- via
+--     an hs.spaces.watcher. See currentDesktopNumber()/switchOrToggleDesktop() and
+--     the currentDesktop/previousDesktop state below.
 --   * Desktop 10 is keyed to 0 (Option+0), mirroring how macOS numbers the
 --     digit row 1..9,0. IMPORTANT: macOS only AUTO-binds Ctrl+1..Ctrl+9; it does
 --     NOT assign Ctrl+0 to "Switch to Desktop 10". So Option+0 stays a no-op
@@ -60,6 +66,36 @@ local function userSpaceIds(screenUUID)
     return result
 end
 
+-- Current desktop NUMBER (1-based), found by locating the active space in the
+-- ordered userSpaceIds list. Returns nil if the active space is a full-screen-app
+-- space (skipped by userSpaceIds) -- callers then fall back to a plain switch.
+local function currentDesktopNumber()
+    local uuid = hs.screen.mainScreen():getUUID()
+    local active = hs.spaces.activeSpaceOnScreen(uuid)
+    for i, spaceId in ipairs(userSpaceIds(uuid)) do
+        if spaceId == active then return i end
+    end
+    return nil
+end
+
+-- Back-and-forth state. currentDesktop is the last-known active desktop number;
+-- previousDesktop is the one we were on before it. Kept in sync across ALL space
+-- changes (hotkeys, native Ctrl+N, swipes, Mission Control) by the watcher below.
+local currentDesktop  = currentDesktopNumber()
+local previousDesktop = nil
+
+-- 'spaceWatcher' is intentionally GLOBAL: a local would be garbage-collected and
+-- the watcher would silently stop firing. On every space change, remember the
+-- desktop we just left so Option+N can jump back to it.
+spaceWatcher = hs.spaces.watcher.new(function()
+    local now = currentDesktopNumber()
+    if now and now ~= currentDesktop then
+        previousDesktop = currentDesktop
+        currentDesktop  = now
+    end
+end)
+spaceWatcher:start()
+
 -- Switch to a desktop number (1-based) by synthesizing the native, fast
 -- Ctrl+<number> "Switch to Desktop N" shortcut.
 function switchToDesktop(spaceNumber)
@@ -68,9 +104,26 @@ function switchToDesktop(spaceNumber)
     hs.eventtap.event.newKeyEvent({ "ctrl" }, key, false):post()
 end
 
+-- Option+N handler: switch to Desktop N, but if we're ALREADY on N, toggle back
+-- to the previously-active desktop (i3-style back_and_forth).
+function switchOrToggleDesktop(n)
+    local current = currentDesktopNumber() -- live & authoritative for the decision
+    -- Self-heal: if the watcher missed a change, reconcile so previousDesktop is
+    -- correct even when the toggle is the first thing we hear about that change.
+    if current and current ~= currentDesktop then
+        previousDesktop, currentDesktop = currentDesktop, current
+    end
+    if current == n and previousDesktop and previousDesktop ~= n then
+        switchToDesktop(previousDesktop) -- already on N -> go back
+    else
+        switchToDesktop(n)               -- normal switch (no-op if on N w/o history)
+    end
+    -- The watcher updates currentDesktop/previousDesktop once the switch lands.
+end
+
 -- Bind Option + 1-DESKTOPS_NUMBER to switch desktops (Option+0 -> Desktop 10).
 for i = 1, DESKTOPS_NUMBER do
-    hs.hotkey.bind(SWITCH_MODS, desktopKey(i), function() switchToDesktop(i) end)
+    hs.hotkey.bind(SWITCH_MODS, desktopKey(i), function() switchOrToggleDesktop(i) end)
 end
 
 -- ============================================================================
@@ -158,4 +211,7 @@ function dumpSpaces()
     local uuid = hs.screen.mainScreen():getUUID()
     print("userSpaceIds: " .. hs.inspect(userSpaceIds(uuid)))
     print("activeSpaceOnScreen: " .. tostring(hs.spaces.activeSpaceOnScreen(uuid)))
+    print("currentDesktopNumber: " .. tostring(currentDesktopNumber()))
+    print("tracked currentDesktop: " .. tostring(currentDesktop) ..
+          ", previousDesktop: " .. tostring(previousDesktop))
 end
