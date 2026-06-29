@@ -1,5 +1,7 @@
 # Download with resuming and segmented downloading
 brew "aria2"
+# Archival front-end
+brew "atool"
 # GitHub command-line tool
 brew "gh"
 # GNU Privacy Guard (OpenPGP)
