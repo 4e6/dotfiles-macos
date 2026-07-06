@@ -17,14 +17,14 @@ re-includes only the files below).
 
 ### Hammerspoon keybindings
 
-Configured in `.hammerspoon/` (`init.lua` loads `spaces.lua` and
-`window_focus.lua`):
+Configured in `.hammerspoon/`:
 
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl/Option + 1…9, 0` | Switch to Desktop 1–10 (`0` = Desktop 10) |
 | `Option + Shift + 1…9, 0` | Move the focused window to Desktop N (`0` = Desktop 10) |
 | `Option + H / J / K / L` | Focus the window to the left / down / up / right |
+| `Command + F1 / F2` | Dim / brighten the keyboard backlight one step |
 
 > Desktop 10 (`0`) only works once you map it in macOS: *System Settings →
 > Keyboard → Keyboard Shortcuts → Mission Control → "Switch to Desktop 10" =

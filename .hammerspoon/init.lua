@@ -11,4 +11,7 @@ require("spaces")
 -- Directional window focus (cmd+h / cmd+l -> focus window left / right)
 require("window_focus")
 
+-- Keyboard backlight step controls (Command+F1 / Command+F2)
+require("keyboard_backlight")
+
 hs.alert.show("Hammerspoon config loaded")
