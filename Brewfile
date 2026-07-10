@@ -24,6 +24,8 @@ brew "zsh-completions"
 brew "zsh-fast-syntax-highlighting"
 # Terminal-based AI coding assistant
 cask "claude-code"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Desktop automation application
 cask "hammerspoon"
 # Free and open-source media player

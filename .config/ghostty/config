@@ -1,0 +1,19 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config
+# Reload after editing: Cmd+Shift+, (or just restart Ghostty)
+
+# Nord theme — matches the `colorscheme nord` used in ~/.vimrc.
+# This sets the full 16-color palette + background (#2E3440) and foreground.
+theme = nord
+
+# Ghostty renders 24-bit truecolor by default — nothing to enable.
+# That's what lets Nord use its intended brighter comment color (#616E88)
+# instead of the dim 256-color fallback you saw in Terminal.app.
+
+# Font — Ghostty bundles JetBrains Mono. Change font-family to taste
+# (list installed monospace fonts with: ghostty +list-fonts).
+font-size = 12
+
+# A little breathing room around the text grid.
+window-padding-x = 6
+window-padding-y = 6
