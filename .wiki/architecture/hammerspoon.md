@@ -10,7 +10,7 @@ source_commit: 079fc9a1170fec06e93de4981e1c4ac5ef94fc18
 
 # Responsibility
 
-The only part of these dotfiles with real runtime logic (Lua). It owns three
+The only part of these dotfiles with real runtime logic (Lua). It owns four
 independent keyboard concerns — one file each — wired together by `init.lua`:
 
 * **Desktop switching** (`spaces.lua`) — Option+`N` jumps to Desktop N, with
@@ -19,18 +19,25 @@ independent keyboard concerns — one file each — wired together by `init.lua`
   keyboard focus to the window in that direction.
 * **Keyboard backlight** (`keyboard_backlight.lua`) — Command+F1/F2 step the
   backlight down/up.
+* **Sleep control** (`sleep.lua`) — Command+F6 sleeps the Mac like a lid close,
+  or only locks the screen when `caffeinate` is holding it awake.
 
 The current keybinding table lives in the repo's `README.md`; it is not
 repeated here.
 
 # Design principle: drive macOS, don't replace it
 
-Every feature works by **synthesizing the native macOS key event** and letting
+Most features work by **synthesizing the native macOS key event** and letting
 the OS do the work, rather than calling Hammerspoon's high-level `hs.spaces` /
 brightness APIs. The native path is fast and reliable; the high-level APIs are
 slow, animated, or outright broken on current macOS. This is
 [decision 0002](/decisions/0002-synthesize-native-macos-shortcuts.md), and it is
 the single idea that explains most of the code.
+
+The one exception is **sleep control**, which calls `hs.caffeinate` directly
+(`systemSleep` / `lockScreen`): that API is reliable — sleep and lock aren't
+broken the way `hs.spaces` is — and there is no user-facing native shortcut to
+synthesize in the first place.
 
 # Boundaries
 

@@ -2,6 +2,11 @@
 
 ## 2026-07-13
 
+* **Sleep control**: Added `.hammerspoon/sleep.lua` — Command+F6 sleeps the Mac
+  like a lid close, or only locks the screen when `caffeinate` is running.
+  Updated the [Hammerspoon module](/architecture/hammerspoon.md) (now four
+  concerns, and noted the `hs.caffeinate` exception to
+  [decision 0002](/decisions/0002-synthesize-native-macos-shortcuts.md)).
 * **Initialization**: Bootstrapped the wiki. Seeded the [overview](/overview.md),
   the [Hammerspoon module](/architecture/hammerspoon.md), decisions
   [0001 home-dir allowlist](/decisions/0001-home-directory-git-allowlist.md),

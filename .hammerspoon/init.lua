@@ -14,4 +14,7 @@ require("window_focus")
 -- Keyboard backlight step controls (Command+F1 / Command+F2)
 require("keyboard_backlight")
 
+-- Sleep control (Command+F6 -> sleep like a lid close; lock if caffeinated)
+require("sleep")
+
 hs.alert.show("Hammerspoon config loaded")

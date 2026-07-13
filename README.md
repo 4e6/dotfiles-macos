@@ -25,6 +25,7 @@ Configured in `.hammerspoon/`:
 | `Option + Shift + 1…9, 0` | Move the focused window to Desktop N (`0` = Desktop 10) |
 | `Option + H / J / K / L` | Focus the window to the left / down / up / right |
 | `Command + F1 / F2` | Dim / brighten the keyboard backlight one step |
+| `Command + F6` | Sleep the Mac like closing the lid — or, if `caffeinate` is running, just lock the screen |
 
 > Desktop 10 (`0`) only works once you map it in macOS: *System Settings →
 > Keyboard → Keyboard Shortcuts → Mission Control → "Switch to Desktop 10" =
