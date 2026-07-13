@@ -19,3 +19,7 @@
 
 !/Brewfile
 !/README.md
+
+# LLM-wiki knowledge bundle + its read-path pointer (see CLAUDE.md)
+!/CLAUDE.md
+!/.wiki/

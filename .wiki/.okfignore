@@ -1,0 +1,11 @@
+# Coverage tuning for a dotfiles repo. Replaces okf.py's DEFAULT_IGNORE.
+#
+# Nearly every tracked file here is a dotfile — dotfiles are the whole point of
+# the repo — so blanket-ignoring them for the S004 "undocumented code" report is
+# correct: durable knowledge about a config file is tracked per-page via
+# `sources` + `source_commit` (the S001 staleness check, which is unaffected by
+# this list). Also ignore prose and the self-describing Brewfile.
+.*
+**/.*
+**/*.md
+Brewfile
