@@ -185,7 +185,10 @@ function moveFocusedWindowToSpace(spaceNumber)
     hs.timer.usleep(20000)
 
     local f = win:frame()
-    local grab = { x = f.x + f.w / 2, y = f.y + 11 } -- center of the title bar
+    -- Grab the spot between the red close button and the yellow minimize
+    -- button on the window top left. Fixes the issue with moving applications
+    -- with busy title bar. For example the Chrome bar can be full of tabs.
+    local grab = { x = f.x + 30, y = f.y + 11 }
     local origMouse = hs.mouse.absolutePosition()
 
     hs.mouse.absolutePosition(grab)
