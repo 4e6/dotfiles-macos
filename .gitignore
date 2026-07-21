@@ -5,10 +5,11 @@
 !/.gitignore
 !/.gitconfig
 
+!/.aria2/
+
 !/.gnupg/
 /.gnupg/*
 !/.gnupg/gpg-agent.conf
-
 
 !/.hammerspoon
 
