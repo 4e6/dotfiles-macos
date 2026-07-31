@@ -12,7 +12,7 @@ theme = nord
 
 # Font — Ghostty bundles JetBrains Mono. Change font-family to taste
 # (list installed monospace fonts with: ghostty +list-fonts).
-font-size = 12
+font-size = 13
 
 # A little breathing room around the text grid.
 window-padding-x = 6
