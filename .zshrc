@@ -117,11 +117,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Fish-like enhancements (installed via Homebrew; see $BREW_PREFIX block above).
-# Order matters: load zsh-autosuggestions first, then fast-syntax-highlighting
-# LAST -- the highlighter wraps every ZLE widget defined before it, so anything
-# that binds widgets (Oh My Zsh, autosuggestions) must already be loaded.
 if [[ -n "$BREW_PREFIX" ]]; then
+  # Fish-like enhancements (installed via Homebrew; see $BREW_PREFIX block above).
+  # Order matters: load zsh-autosuggestions first, then fast-syntax-highlighting
+  # LAST -- the highlighter wraps every ZLE widget defined before it, so anything
+  # that binds widgets (Oh My Zsh, autosuggestions) must already be loaded.
   source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   source "$BREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+  # NVM
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && source "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && source "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 fi

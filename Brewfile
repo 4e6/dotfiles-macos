@@ -10,6 +10,8 @@ brew "gnupg"
 brew "htop"
 # Media player based on MPlayer and mplayer2
 brew "mpv"
+# Manage multiple Node.js versions
+brew "nvm"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # File browser
@@ -24,6 +26,8 @@ brew "zsh-completions"
 brew "zsh-fast-syntax-highlighting"
 # Terminal-based AI coding assistant
 cask "claude-code"
+# Set of tools to manage resources and applications hosted on Google Cloud
+cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Desktop automation application
