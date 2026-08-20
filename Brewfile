@@ -34,3 +34,4 @@ cask "ghostty"
 cask "hammerspoon"
 # Free and open-source media player
 cask "iina"
+npm "corepack"
