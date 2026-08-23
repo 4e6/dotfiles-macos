@@ -1,0 +1,39 @@
+# macos
+.DS_Store
+
+# cabal
+.cabal-sandbox/
+cabal.sandbox.config
+cabal.project.local
+dist/
+dist-newstyle/
+.hlint.yaml
+.ghc.environment.*
+
+# stack
+.stack-work/
+
+# emacs
+.dir-locals.el
+
+# sbt
+target/
+/project
+/.bsp/
+/.lib-src/
+/tags
+/.metals
+/.sbtopts
+local.sbt
+
+# idea
+/.idea
+
+# zed
+/.zed
+
+# misc
+TAGS
+/logs
+/.local/
+.claude/
