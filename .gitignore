@@ -15,6 +15,10 @@
 
 !/.vim/
 /.vim/plugged/
+# vim scratch dirs (see 'Temporary files' in .vimrc) -- generated, never tracked
+/.vim/swap/
+/.vim/backup/
+/.vim/undo/
 
 !/.zshrc
 

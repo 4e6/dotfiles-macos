@@ -2,7 +2,25 @@
 let mapleader="\<SPACE>" " Map the leader key to SPC.
 set hidden               " This allows buffers to be hidden if you've modified a buffer.
 set undofile             " Keep undo history between sessions
-set undodir=~/.local/share/nvim/undo
+
+" Temporary files
+" Vim's default 'directory' and 'backupdir' both start with '.', which drops
+" .foo.txt.swp beside foo.txt and makes it surface in git status. Park all
+" three kinds of scratch file under ~/.vim instead. The trailing '//' encodes
+" the edited file's full path into the name, so same-named files in different
+" directories don't collide on one swapfile.
+set directory=~/.vim/swap//
+set backupdir=~/.vim/backup//
+set undodir=~/.vim/undo//
+
+" Vim will NOT create these, and a missing dir fails quietly.
+" 0700 because swap and undo files hold file contents verbatim.
+for s:dir in [&directory, &backupdir, &undodir]
+  let s:path = expand(substitute(s:dir, '/\+$', '', ''))
+  if !isdirectory(s:path)
+    call mkdir(s:path, 'p', 0700)
+  endif
+endfor
 
 " Search
 set hlsearch             " Highlight search results.
