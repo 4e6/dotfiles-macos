@@ -1,5 +1,15 @@
 # Change Log
 
+## 2026-08-23
+
+* **Credentials**: Switched `credential.helper` from `store` to `osxkeychain`
+  ([decision 0004](/decisions/0004-credentials-in-macos-keychain.md)) — `store`
+  keeps tokens in cleartext at `~/.git-credentials`, and a tracked `.gitconfig`
+  publishes that recommendation to anyone who clones these dotfiles.
+* **Publication**: Audited the full history ahead of making this repo public —
+  no secrets in any blob, and pruned the `refs/original/*` leftovers from the
+  earlier commit-signing rewrite.
+
 ## 2026-07-13
 
 * **Sleep control**: Added `.hammerspoon/sleep.lua` — Command+F6 sleeps the Mac
