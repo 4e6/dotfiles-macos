@@ -1,3 +1,4 @@
+tap "oven-sh/bun"
 # Download with resuming and segmented downloading
 brew "aria2"
 # Archival front-end
@@ -24,6 +25,8 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 # Feature-rich syntax highlighting for Zsh
 brew "zsh-fast-syntax-highlighting"
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun", trusted: true
 # Terminal-based AI coding assistant
 cask "claude-code"
 # Set of tools to manage resources and applications hosted on Google Cloud
