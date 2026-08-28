@@ -34,14 +34,14 @@
 	# $1 - author
 	authorstat = "!f() { \
 		git log --author=\"$1\" --pretty=tformat: --numstat | \
-		gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END \
+		awk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END \
 		{ printf \"added lines: %s removed lines: %s total lines: %s\\n\",add,subs,loc }' - ; \
 		}; f"
 	# changes for given period, expect arguments
 	# $1 - refs to compare: "@{1 week ago}", v0.2..master
 	shortstat = diff --shortstat
 	# count lines of code
-	loc = "!f() { git ls-files -z \"$@\" | wc -l --files0-from=- ; }; f"
+	loc = "!f() { git ls-files -z \"$@\" | xargs -0 sh -c 'for f; do [ -f \"$f\" ] && printf \"%s\\0\" \"$f\"; done' _ | xargs -0 wc -l | awk '$2 != \"total\" { t += $1 } END { print t+0, \"total\" }'; }; f"
 	ls = log --pretty=format:'%C(auto)%h%d %Cblue%cn%Creset %s' --decorate --numstat
 	# graphical commits tree
 	ll = log --graph --oneline --decorate
