@@ -27,8 +27,14 @@ brew "zsh-completions"
 brew "zsh-fast-syntax-highlighting"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun", trusted: true
+# Agent orchestration platform
+cask "antigravity"
+# Terminal interface for Antigravity agents
+cask "antigravity-cli"
 # Terminal-based AI coding assistant
 cask "claude-code"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
