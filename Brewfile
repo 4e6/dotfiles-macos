@@ -15,6 +15,8 @@ brew "mpv"
 brew "nvm"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
 # File browser
 brew "ranger"
 # Vi 'workalike' with many additional features
@@ -27,12 +29,10 @@ brew "zsh-completions"
 brew "zsh-fast-syntax-highlighting"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun", trusted: true
-# Agent orchestration platform
-cask "antigravity"
 # Terminal interface for Antigravity agents
 cask "antigravity-cli"
 # Terminal-based AI coding assistant
-cask "claude-code"
+cask "claude-code@latest"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Set of tools to manage resources and applications hosted on Google Cloud
