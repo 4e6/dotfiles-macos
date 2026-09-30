@@ -1,3 +1,6 @@
 [submodule ".vim/vim-plug"]
 	path = .vim/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
+[submodule ".local/share/trainingpeaks-mcp"]
+	path = .local/share/trainingpeaks-mcp
+	url = https://github.com/JamsusMaximus/trainingpeaks-mcp.git

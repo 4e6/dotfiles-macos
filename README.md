@@ -14,6 +14,7 @@ re-includes only the files below).
 | `.zshrc` | Zsh / Oh My Zsh configuration. |
 | `Brewfile` | Homebrew packages & casks, installable in one go with `brew bundle`. |
 | `.hammerspoon/` | [Hammerspoon](https://www.hammerspoon.org/) automation (see below). |
+| `.local/share/trainingpeaks-mcp/` | The [TrainingPeaks MCP server](https://github.com/JamsusMaximus/trainingpeaks-mcp), a submodule pinned to a reviewed commit, for Claude Code and Codex (see below). |
 
 ### Hammerspoon keybindings
 
@@ -61,6 +62,7 @@ git init
 git remote add origin <YOUR_REPO_URL>
 git fetch origin
 git checkout -f main      # -f overwrites the tracked dotfiles with the repo versions
+git submodule update --init   # vim-plug and the TrainingPeaks MCP server
 ```
 
 Only the allowlisted files are touched; the rest of your home directory is left
@@ -97,6 +99,45 @@ This installs everything in the `Brewfile`, including Hammerspoon.
 
 The `hs` command-line tool is enabled automatically (`require("hs.ipc")` in
 `init.lua`), so `hs -c "..."` works from the terminal after a reload.
+
+### 7. Set up the TrainingPeaks MCP server
+
+The submodule holds the source; its environment is built per machine, with
+Homebrew's Python (the system `python3` is too old), and is ignored by the
+submodule's own `.gitignore`:
+
+```bash
+TP=~/.local/share/trainingpeaks-mcp
+/opt/homebrew/bin/python3 -m venv $TP/.venv
+$TP/.venv/bin/pip install -e "$TP[browser]"
+$TP/.venv/bin/tp-mcp auth --from-browser chrome   # stores the cookie in the Keychain
+```
+
+Then register it with both assistants. Their config files (`~/.claude.json`,
+`~/.codex/config.toml`) are machine state and are not tracked, so this is the
+record of what goes in them:
+
+```bash
+claude mcp add --scope user trainingpeaks -- $TP/.venv/bin/tp-mcp serve
+codex mcp add trainingpeaks -- $TP/.venv/bin/tp-mcp serve
+```
+
+## Updating the TrainingPeaks MCP server
+
+The submodule is pinned, so an update is a commit here, made after reading what
+changed:
+
+```bash
+cd ~
+git submodule update --remote .local/share/trainingpeaks-mcp
+git diff --submodule=log .local/share/trainingpeaks-mcp     # what is coming in
+git -C .local/share/trainingpeaks-mcp diff HEAD@{1} --stat -- pyproject.toml
+```
+
+The install is editable, so source changes take effect on the next start of
+Claude Code or Codex. Only when `pyproject.toml` changed, reinstall:
+`~/.local/share/trainingpeaks-mcp/.venv/bin/pip install -e "$HOME/.local/share/trainingpeaks-mcp[browser]"`.
+Then commit the bump.
 
 ## Maintaining the Brewfile
 

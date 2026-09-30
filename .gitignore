@@ -23,6 +23,13 @@
 
 !/.zshrc
 
+# TrainingPeaks MCP server, a submodule; its .venv is ignored by its own .gitignore
+!/.local/
+/.local/*
+!/.local/share/
+/.local/share/*
+!/.local/share/trainingpeaks-mcp
+
 !/Brewfile
 !/README.md
 
