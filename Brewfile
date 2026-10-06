@@ -19,6 +19,8 @@ brew "pinentry-mac"
 brew "poppler"
 # File browser
 brew "ranger"
+# Rust toolchain installer
+brew "rustup"
 # Vi 'workalike' with many additional features
 brew "vim"
 # Fish-like fast/unobtrusive autosuggestions for zsh

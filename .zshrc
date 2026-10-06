@@ -128,6 +128,9 @@ if [[ -n "$BREW_PREFIX" ]]; then
   export NVM_DIR="$HOME/.nvm"
   [ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && source "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && source "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  # rustup is keg-only (conflicts with the `rust` formula), so it isn't symlinked
+  # into $BREW_PREFIX/bin; put its bin dir on $PATH explicitly.
+  export PATH="$BREW_PREFIX/opt/rustup/bin:$PATH"
 fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
