@@ -109,7 +109,7 @@ submodule's own `.gitignore`:
 
 ```bash
 TP=~/.local/share/trainingpeaks-mcp
-/opt/homebrew/bin/python3 -m venv $TP/.venv
+/opt/homebrew/bin/python3.14 -m venv $TP/.venv
 $TP/.venv/bin/pip install -e "$TP[browser]"
 $TP/.venv/bin/tp-mcp auth --from-browser chrome   # stores the cookie in the Keychain
 ```
