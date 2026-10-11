@@ -13,6 +13,8 @@ brew "htop"
 brew "mpv"
 # Manage multiple Node.js versions
 brew "nvm"
+# Create, run, and share large language models (LLMs)
+brew "ollama"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # PDF rendering library (based on the xpdf-3.0 code base)
@@ -45,4 +47,6 @@ cask "ghostty"
 cask "hammerspoon"
 # Free and open-source media player
 cask "iina"
+# Replacement for Docker Desktop
+cask "orbstack"
 npm "corepack"
