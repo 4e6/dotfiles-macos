@@ -19,6 +19,9 @@ brew "ollama"
 brew "pinentry-mac"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# Homebrew's default Python (alias, not python@3.X), used for the MCP server venvs.
+# `brew bundle dump` rewrites this as python@3.X; change it back (see README).
+brew "python"
 # File browser
 brew "ranger"
 # Rust toolchain installer

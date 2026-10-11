@@ -104,13 +104,16 @@ The `hs` command-line tool is enabled automatically (`require("hs.ipc")` in
 ### 7. Set up the TrainingPeaks MCP server
 
 The submodule holds the source; its environment is built per machine, with
-Homebrew's Python (the system `python3` is too old), and is ignored by the
-submodule's own `.gitignore`:
+Homebrew's default Python (`brew "python"` in the Brewfile), and is ignored by
+the submodule's own `.gitignore`. Don't use `which python3`: `/etc/paths.d`
+puts `/opt/homebrew/bin` after `/usr/bin`, so it finds the system Python 3.9,
+which is too old. `brew --prefix python3` follows Homebrew's current default
+version:
 
 ```bash
 TP=~/.local/share/trainingpeaks-mcp
-/opt/homebrew/bin/python3.14 -m venv $TP/.venv
-$TP/.venv/bin/pip install -e "$TP[browser]"
+"$(brew --prefix python3)/bin/python3" -m venv $TP/.venv
+$TP/.venv/bin/pip install -e "${TP}[browser]"   # braces: zsh reads "$TP[browser]" as a subscript
 $TP/.venv/bin/tp-mcp auth --from-browser chrome   # stores the cookie in the Keychain
 ```
 
@@ -132,7 +135,7 @@ dependency and the code needs the 1.x API (`mcp.server.fastmcp`), so pin it:
 
 ```bash
 ON=~/.local/share/open-notebook-mcp
-/opt/homebrew/bin/python3.14 -m venv $ON/.venv
+"$(brew --prefix python3)/bin/python3" -m venv $ON/.venv
 $ON/.venv/bin/pip install -e "$ON" "mcp[cli]>=1.23.2,<2"
 claude mcp add --scope user open-notebook -e OPEN_NOTEBOOK_URL=http://localhost:5055 \
   -- $ON/.venv/bin/open-notebook-mcp
@@ -155,6 +158,15 @@ Claude Code or Codex. Only when `pyproject.toml` changed, reinstall:
 `~/.local/share/trainingpeaks-mcp/.venv/bin/pip install -e "$HOME/.local/share/trainingpeaks-mcp[browser]"`.
 Then commit the bump.
 
+## When Homebrew's default Python changes
+
+The MCP venvs are tied to the Python version they were built with (see
+`version` in each `.venv/pyvenv.cfg`). When `brew --prefix python3` moves to a
+new version (roughly yearly), rebuild them, or they break once the old
+version is removed: delete each `.venv` and rerun the venv and `pip install`
+lines from steps 7 and 8. The registrations and the TrainingPeaks Keychain
+cookie are unaffected.
+
 ## Maintaining the Brewfile
 
 After installing or removing Homebrew packages, regenerate the list:
@@ -162,6 +174,9 @@ After installing or removing Homebrew packages, regenerate the list:
 ```bash
 brew bundle dump --force --file=~/Brewfile
 ```
+
+`dump` writes the default Python as a versioned `brew "python@3.X"`; change it
+back to `brew "python"` so the Brewfile keeps following Homebrew's default.
 
 Other useful commands:
 
