@@ -4,3 +4,6 @@
 [submodule ".local/share/trainingpeaks-mcp"]
 	path = .local/share/trainingpeaks-mcp
 	url = https://github.com/JamsusMaximus/trainingpeaks-mcp.git
+[submodule ".local/share/open-notebook-mcp"]
+	path = .local/share/open-notebook-mcp
+	url = https://github.com/Epochal-dev/open-notebook-mcp.git

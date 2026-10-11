@@ -15,6 +15,7 @@ re-includes only the files below).
 | `Brewfile` | Homebrew packages & casks, installable in one go with `brew bundle`. |
 | `.hammerspoon/` | [Hammerspoon](https://www.hammerspoon.org/) automation (see below). |
 | `.local/share/trainingpeaks-mcp/` | The [TrainingPeaks MCP server](https://github.com/JamsusMaximus/trainingpeaks-mcp), a submodule pinned to a reviewed commit, for Claude Code and Codex (see below). |
+| `.local/share/open-notebook-mcp/` | The [Open Notebook MCP server](https://github.com/Epochal-dev/open-notebook-mcp), a submodule pinned to a reviewed commit, giving Claude Code access to the local Open Notebook in `~/projects/4e6/open-notebook` (see below). |
 
 ### Hammerspoon keybindings
 
@@ -62,7 +63,7 @@ git init
 git remote add origin <YOUR_REPO_URL>
 git fetch origin
 git checkout -f main      # -f overwrites the tracked dotfiles with the repo versions
-git submodule update --init   # vim-plug and the TrainingPeaks MCP server
+git submodule update --init
 ```
 
 Only the allowlisted files are touched; the rest of your home directory is left
@@ -120,6 +121,21 @@ record of what goes in them:
 ```bash
 claude mcp add --scope user trainingpeaks -- $TP/.venv/bin/tp-mcp serve
 codex mcp add trainingpeaks -- $TP/.venv/bin/tp-mcp serve
+```
+
+### 8. Set up the Open Notebook MCP server
+
+Needs Open Notebook running (`docker compose up -d` in
+`~/projects/4e6/open-notebook`, see its README). Same layout as TrainingPeaks:
+source in the submodule, per-machine `.venv`. Upstream doesn't cap its `mcp`
+dependency and the code needs the 1.x API (`mcp.server.fastmcp`), so pin it:
+
+```bash
+ON=~/.local/share/open-notebook-mcp
+/opt/homebrew/bin/python3.14 -m venv $ON/.venv
+$ON/.venv/bin/pip install -e "$ON" "mcp[cli]>=1.23.2,<2"
+claude mcp add --scope user open-notebook -e OPEN_NOTEBOOK_URL=http://localhost:5055 \
+  -- $ON/.venv/bin/open-notebook-mcp
 ```
 
 ## Updating the TrainingPeaks MCP server
