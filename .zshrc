@@ -75,6 +75,15 @@ plugins=(
   macos
 )
 
+# Put Homebrew ahead of the system on $PATH. macOS only adds it through
+# /etc/paths.d/homebrew, which path_helper appends AFTER /usr/bin, so system
+# tools would shadow Homebrew's (e.g. `python3` would be the system 3.9).
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # Homebrew-installed zsh enhancements (fish-like). `brew --prefix` differs by
 # architecture (/opt/homebrew on Apple Silicon, /usr/local on Intel), so resolve
 # it once into $BREW_PREFIX and reuse it for the `source` lines at the very end.
