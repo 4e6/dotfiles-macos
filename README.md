@@ -15,7 +15,6 @@ re-includes only the files below).
 | `Brewfile` | Homebrew packages & casks, installable in one go with `brew bundle`. |
 | `.hammerspoon/` | [Hammerspoon](https://www.hammerspoon.org/) automation (see below). |
 | `.local/share/trainingpeaks-mcp/` | The [TrainingPeaks MCP server](https://github.com/JamsusMaximus/trainingpeaks-mcp), a submodule pinned to a reviewed commit, for Claude Code and Codex (see below). |
-| `.local/share/open-notebook-mcp/` | The [Open Notebook MCP server](https://github.com/Epochal-dev/open-notebook-mcp), a submodule pinned to a reviewed commit, giving Claude Code access to the local Open Notebook in `~/projects/4e6/open-notebook` (see below). |
 
 ### Hammerspoon keybindings
 
@@ -126,21 +125,6 @@ claude mcp add --scope user trainingpeaks -- $TP/.venv/bin/tp-mcp serve
 codex mcp add trainingpeaks -- $TP/.venv/bin/tp-mcp serve
 ```
 
-### 8. Set up the Open Notebook MCP server
-
-Needs Open Notebook running (`docker compose up -d` in
-`~/projects/4e6/open-notebook`, see its README). Same layout as TrainingPeaks:
-source in the submodule, per-machine `.venv`. Upstream doesn't cap its `mcp`
-dependency and the code needs the 1.x API (`mcp.server.fastmcp`), so pin it:
-
-```bash
-ON=~/.local/share/open-notebook-mcp
-"$(brew --prefix python3)/bin/python3" -m venv $ON/.venv
-$ON/.venv/bin/pip install -e "$ON" "mcp[cli]>=1.23.2,<2"
-claude mcp add --scope user open-notebook -e OPEN_NOTEBOOK_URL=http://localhost:5055 \
-  -- $ON/.venv/bin/open-notebook-mcp
-```
-
 ## Updating the TrainingPeaks MCP server
 
 The submodule is pinned, so an update is a commit here, made after reading what
@@ -160,11 +144,11 @@ Then commit the bump.
 
 ## When Homebrew's default Python changes
 
-The MCP venvs are tied to the Python version they were built with (see
+The MCP venv is tied to the Python version it was built with (see
 `version` in each `.venv/pyvenv.cfg`). When `brew --prefix python3` moves to a
-new version (roughly yearly), rebuild them, or they break once the old
-version is removed: delete each `.venv` and rerun the venv and `pip install`
-lines from steps 7 and 8. The registrations and the TrainingPeaks Keychain
+new version (roughly yearly), rebuild it, or it breaks once the old
+version is removed: delete the `.venv` and rerun the venv and `pip install`
+lines from step 7. The registration and the TrainingPeaks Keychain
 cookie are unaffected.
 
 ## Maintaining the Brewfile

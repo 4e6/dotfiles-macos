@@ -23,13 +23,12 @@
 
 !/.zshrc
 
-# MCP servers (TrainingPeaks, Open Notebook), submodules; each .venv is ignored by its own .gitignore
+# MCP servers (TrainingPeaks), submodule; its .venv is ignored by its own .gitignore
 !/.local/
 /.local/*
 !/.local/share/
 /.local/share/*
 !/.local/share/trainingpeaks-mcp
-!/.local/share/open-notebook-mcp
 
 !/Brewfile
 !/README.md
