@@ -84,6 +84,12 @@ elif [[ -x /usr/local/bin/brew ]]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+# Drop duplicate $PATH entries, keeping the first occurrence (so the Homebrew
+# prepend above wins over path_helper's copy). Must come after shellenv:
+# zsh only dedupes when the flag is set or $path is assigned as an array,
+# not on `export PATH=...` string assignments like the one shellenv does.
+typeset -U path
+
 # Homebrew-installed zsh enhancements (fish-like). `brew --prefix` differs by
 # architecture (/opt/homebrew on Apple Silicon, /usr/local on Intel), so resolve
 # it once into $BREW_PREFIX and reuse it for the `source` lines at the very end.
