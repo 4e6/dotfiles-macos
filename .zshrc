@@ -73,6 +73,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   macos
+  gcloud
 )
 
 # Put Homebrew ahead of the system on $PATH. macOS only adds it through
